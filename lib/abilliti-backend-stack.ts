@@ -1,16 +1,17 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { Stack, StackProps } from "aws-cdk-lib";
+import { UserPool } from "aws-cdk-lib/aws-cognito";
+import { Construct } from "constructs";
+import { AbillitiCognitoUserPool } from "./constructs/cognito-user-pool";
 
-export class AbillitiBackendStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+export class AbillitiBackendStack extends Stack {
+  readonly userPool: UserPool;
+
+  constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'AbillitiBackendQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    this.userPool = new AbillitiCognitoUserPool(
+      this,
+      "AbillitiCognitoUserPool"
+    ).userPool;
   }
 }
