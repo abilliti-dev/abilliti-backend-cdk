@@ -61,7 +61,7 @@ export class AbillitiCognitoUserPool extends Construct {
         },
       },
       userVerification: {
-        emailSubject: "abilliti - Verify your email",
+        emailSubject: "Abilliti - Verify your email",
         emailBody: "Your verification code is {####}.",
         emailStyle: VerificationEmailStyle.CODE,
       },
