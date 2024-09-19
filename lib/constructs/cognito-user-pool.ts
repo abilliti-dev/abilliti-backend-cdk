@@ -75,6 +75,7 @@ export class AbillitiCognitoUserPool extends Construct {
         userPassword: true,
         userSrp: true,
       },
+      preventUserExistenceErrors: true,
     });
   }
 }
