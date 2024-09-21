@@ -13,7 +13,7 @@ export class InvoiceS3Bucket extends Construct {
 
   private createBucket(): Bucket {
     return new Bucket(this, "InvoiceBucket", {
-      bucketName: "invoice-bucket",
+      bucketName: "abilliti-user-invoice-bucket",
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       bucketKeyEnabled: true,
       encryption: BucketEncryption.S3_MANAGED,
