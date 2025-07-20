@@ -1,0 +1,3 @@
+[submodule "lambdas"]
+	path = lambdas
+	url = https://github.com/abilliti-dev/abilliti-lambda.git
