@@ -1,0 +1,45 @@
+name: Deploy CDK When Lambda Updates
+
+on:
+  repository_dispatch:
+    types: [lambda-updated]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout CDK repo (with submodule)
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Pull latest Lambda submodule from main
+        working-directory: ./lambdas
+        run: |
+          git checkout main
+          git pull origin main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::026090533592:role/GitHubActionsDeployRole
+          aws-region: us-west-1
+
+      - name: CDK Bootstrap (optional)
+        run: npx cdk bootstrap
+
+      - name: Deploy CDK stack
+        run: npx cdk deploy --require-approval never
