@@ -21,8 +21,7 @@ jobs:
       - name: Pull latest Lambda submodule from main
         working-directory: ./lambdas
         run: |
-          git checkout main
-          git pull origin main
+            git submodule update --init --recursive --remote
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
