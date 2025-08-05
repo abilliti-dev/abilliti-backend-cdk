@@ -12,10 +12,10 @@ export class ApiRouterLambda extends Construct {
 
     this.function = new Function(this, "Handler", {
       runtime: Runtime.PYTHON_3_12,
-      handler: "app.app",
+      handler: "lambda_function.lambda_handler",
       memorySize: 512,
       timeout: Duration.seconds(10),
-      code: Code.fromAsset(path.join(__dirname, "../../../lambda-service/api")),
+      code: Code.fromAsset(path.join(process.cwd(), "lambdas")),
     });
   }
 }
