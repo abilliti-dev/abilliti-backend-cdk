@@ -17,11 +17,25 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: recursive
+          fetch-depth: 0  # required for full git history and submodule updates
 
-      - name: Pull latest Lambda submodule from main
-        working-directory: ./lambdas
+      - name: Configure submodule to track main branch
         run: |
-            git submodule update --init --recursive --remote
+          git config -f .gitmodules submodule.lambdas.branch main
+          git submodule sync
+          git submodule update --remote --merge
+
+      - name: Commit updated submodule reference (optional)
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add lambdas
+          if git diff --cached --quiet; then
+            echo "No submodule updates to commit."
+          else
+            git commit -m "Update submodule to latest main"
+            git push
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
