@@ -17,7 +17,7 @@ interface ApiGatewayProps {
   userPoolClient: UserPoolClient;
 }
 
-export class ApiGatewayStack extends Construct {
+export class ApiGateway extends Construct {
   readonly api: HttpApi;
 
   constructor(scope: Construct, id: string, props: ApiGatewayProps) {
